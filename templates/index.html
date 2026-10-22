@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SpeechFlow — Live Transcription</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand"><span class="brand-mark">S</span><span>SpeechFlow<small>AI TRANSCRIPTION</small></span></div>
+      <div class="side-label">WORKSPACE</div>
+      <button class="nav-item active" id="nav-live">◉ <span>Live transcription</span></button>
+      <button class="nav-item" id="nav-history">▤ <span>History</span></button>
+      <div class="sidebar-note"><strong>Private by design</strong><p>Speech is processed by the model running on this server. Use a trusted deployment for sensitive recordings.</p></div>
+      <div class="sidebar-footer">Procucev AI Tech · Hiring assignment</div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <div><div class="eyebrow">WORKSPACE / SPEECH TO TEXT</div><h1 id="page-title">Live transcription</h1></div>
+        <div class="status-pill"><span class="status-dot"></span><span id="connection-status">Ready to record</span></div>
+      </header>
+
+      <section id="live-view">
+        <div class="hero">
+          <div><span class="eyebrow light">MULTILINGUAL SPEECH RECOGNITION</span><h2>Your voice,<br>captured in text.</h2>
+            <p>Speak naturally in Hindi, English, or a mix of both. Your transcript will appear as the audio is processed.</p></div>
+          <div class="hero-wave" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+        </div>
+
+        <div class="record-card">
+          <div class="card-heading"><div><h3>Recording studio</h3><p>Allow microphone access when your browser asks.</p></div><span id="recording-badge" class="recording-badge"><i></i> NOT RECORDING</span></div>
+          <div class="mic-zone"><button id="record-button" class="record-button" aria-label="Start recording"><span class="mic-icon">🎙</span></button><strong id="record-label">Start speaking</strong><span id="record-hint">Press the microphone to begin</span><div id="elapsed">00:00</div></div>
+          <div class="control-row"><button id="clear-button" class="button secondary">Clear text</button><div class="control-right"><span class="language-label">Language: Auto detect</span><button id="stop-button" class="button primary" disabled>Stop & save</button></div></div>
+        </div>
+
+        <div class="transcript-card">
+          <div class="card-heading"><div><h3>Live transcript</h3><p>Review and edit the recognised text before saving changes.</p></div><span id="word-count" class="count-pill">0 words</span></div>
+          <textarea id="live-transcript" placeholder="Your recognised speech will appear here…" spellcheck="true"></textarea>
+          <div class="transcript-footer"><span id="live-message">Ready when you are.</span><button id="save-edit-button" class="button secondary">Save edited text</button></div>
+        </div>
+      </section>
+
+      <section id="history-view" class="hidden">
+        <div class="history-toolbar"><div><h2>Transcription history</h2><p>Review, search, edit or delete saved transcripts.</p></div><div class="search-box"><span>⌕</span><input id="history-search" placeholder="Search transcripts…" type="search"></div></div>
+        <div id="history-list" class="history-list"></div>
+        <div id="empty-history" class="empty-state hidden"><div class="empty-icon">▤</div><h3>No transcripts yet</h3><p>Record your first session and it will appear here.</p><button class="button primary" id="empty-start">Start transcribing</button></div>
+      </section>
+      <footer class="main-footer"><span>SpeechFlow</span><span>Flask · Faster-Whisper · PostgreSQL</span></footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status"></div>
+  <dialog id="edit-dialog" class="edit-dialog">
+    <form method="dialog" id="edit-form">
+      <div class="card-heading"><div><h3>Edit transcription</h3><p>Changes are saved to your history.</p></div><button class="icon-button" value="cancel" aria-label="Close">✕</button></div>
+      <label for="edit-title">Title</label><input id="edit-title" maxlength="160" required>
+      <label for="edit-text">Transcript</label><textarea id="edit-text" required></textarea>
+      <input id="edit-id" type="hidden">
+      <div class="dialog-actions"><button class="button secondary" value="cancel">Cancel</button><button id="edit-save" class="button primary" value="submit">Save changes</button></div>
+    </form>
+  </dialog>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
